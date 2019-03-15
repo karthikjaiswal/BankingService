@@ -3,6 +3,7 @@ package com.cg.bankservice;
 import java.util.Scanner;
 
 import com.cg.bankservice.dto.CustomerDetails;
+import com.cg.bankservice.dto.TransactionDetails;
 import com.cg.bankservice.service.BankFunctionService;
 import com.cg.bankservice.service.BankFunctionServiceImpl;
 import com.cg.bankservice.service.TransactionService;
@@ -10,12 +11,18 @@ import com.cg.bankservice.service.TransactionServiceImpl;
 
 public class Bank 
 {
+	static TransactionService transactionService=new TransactionServiceImpl();
+	static TransactionDetails transactionDetails=new TransactionDetails();
+	static Scanner scanner =new Scanner(System.in);
     public static void main( String[] args )
     {
-    	Scanner scanner =new Scanner(System.in);
+    	
     	BankFunctionService bankFunctionService=new BankFunctionServiceImpl();
-    	TransactionService transactionService=new TransactionServiceImpl();
+    	
     	CustomerDetails customerDetails=new CustomerDetails();
+    	
+    	
+    	
         while(true)
         {
         	System.out.println("=======Online Banking============");
@@ -66,52 +73,7 @@ public class Bank
 		        		long acc=bankFunctionService.loginUser(accNo, pass);
 		        		if(acc!=0)
 		        		{
-		        			System.out.println("Enter option:");
-		        			System.out.println("1.Deposit \n2.Withdraw \n3.show balance \n4.fund transfer");
-		        			int option=scanner.nextInt();
-		        			switch(option)
-		        			{
-		        				case 1:
-				        					System.out.println("Enter deposit amount:");
-				        					long depBal=transactionService.depositAmount(acc,scanner.nextLong());
-				        					if(depBal!=0)
-				        						System.out.println("balance after deposit:"+depBal);
-				        					else
-				        						System.err.println("ERROR depositing");
-		        					break;
-		        				case 2:
-				        					System.out.println("Enter withdraw amount:");
-				        					long witBal=transactionService.withdrawAmount(acc,scanner.nextLong());
-				        					if(witBal!=0)
-				        						System.out.println("balance after deposit:"+witBal);
-				        					else
-				        						System.err.println("ERROR depositing");
-		        					break;
-		        				case 3:
-		        							System.out.println("Enter account number");
-		        							long bal=transactionService.showBalance(scanner.nextLong());
-		        							if(bal!=0)
-				        						System.out.println("balance after deposit:"+bal);
-				        					else
-				        						System.err.println("ERROR depositing");
-		        					break;
-		        				case 4:
-		        							System.out.println("Enter to-Account-No: ");
-		        							long toAcc=scanner.nextLong();
-		        							System.out.println("Enter amount to transfer:");
-		        							long amount=scanner.nextLong();
-		        							
-		        							long transId=transactionService.fundTransfer(acc, toAcc, amount);
-		        							if(transId!=0)
-		        								System.out.println("Fund transfered successfully with transaction id:"+transId);
-		        							else
-		        								System.err.println("ERROR transfering");
-		        					break;
-		        				default:
-		        					break;
-		        					
-		        			}
-		        			
+		        				performOperations(acc);	
 		        			
 		        		}
 		        		else
@@ -126,4 +88,70 @@ public class Bank
         	}
         }
     }
+    public static void performOperations(long acc)
+	{
+    	System.out.println("======Bank Operation=====");
+		System.out.println("1.Deposit \n2.Withdraw \n3.show balance \n4.fund transfer \n5.exit");
+		int option=scanner.nextInt();
+		switch(option)
+		{
+			case 1:
+    					System.out.println("Enter deposit amount:");
+    					long depBal=transactionService.depositAmount(acc,scanner.nextLong());
+    					if(depBal!=0)
+    						System.out.println("balance after deposit:"+depBal);
+    					else
+    						System.err.println("ERROR depositing");
+    					
+    					performOperations(acc);
+				break;
+			case 2:
+    					System.out.println("Enter withdraw amount:");
+    					long witBal=transactionService.withdrawAmount(acc,scanner.nextLong());
+    					if(witBal!=0)
+    						System.out.println("balance after deposit:"+witBal);
+    					else
+    						System.err.println("ERROR depositing");
+    					
+    					performOperations(acc);
+				break;
+			case 3:
+						long bal=transactionService.showBalance(acc);
+						if(bal!=0)
+    						System.out.println("balance after deposit:"+bal);
+    					else
+    						System.err.println("ERROR depositing");
+						
+						performOperations(acc);
+				break;
+			case 4:
+						System.out.println("Enter to-Account-No: ");
+						long toAcc=scanner.nextLong();
+						System.out.println("Enter amount to transfer:");
+						long amount=scanner.nextLong();
+						
+						transactionDetails=transactionService.fundTransfer(acc, toAcc, amount);
+						if(transactionDetails!=null)
+						{
+							System.out.println("========printing transaction==========");
+		    				System.out.println("Transaction Id: "+transactionDetails.getTransactionId());
+		    				System.out.println("From Account No: "+transactionDetails.getFromAccountNo());
+		    				System.out.println("To Account No: "+transactionDetails.getToAccountNo());
+		    				System.out.println("Amount Transfered: "+transactionDetails.getAmountTransfered());
+		    				
+						}
+						else
+							System.err.println("ERROR transfering");
+						
+						performOperations(acc);
+				break;
+			case 5:
+				
+					break;
+			default: 
+				System.err.println("Invalid operation");
+				break;
+				
+		}
+	}
 }

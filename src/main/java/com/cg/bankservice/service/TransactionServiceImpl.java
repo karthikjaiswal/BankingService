@@ -2,6 +2,7 @@ package com.cg.bankservice.service;
 
 import com.cg.bankservice.dao.TransactionDao;
 import com.cg.bankservice.dao.TransactionDaoImpl;
+import com.cg.bankservice.dto.TransactionDetails;
 
 public class TransactionServiceImpl implements TransactionService{
 
@@ -21,7 +22,7 @@ public class TransactionServiceImpl implements TransactionService{
 		return transactionDao.showBalance(accNo);
 	}
 
-	public long fundTransfer(long fromAcc, long toAcc, long amount) {
+	public TransactionDetails fundTransfer(long fromAcc, long toAcc, long amount) {
 		// TODO Auto-generated method stub
 		return transactionDao.fundTransfer(fromAcc, toAcc, amount);
 	}

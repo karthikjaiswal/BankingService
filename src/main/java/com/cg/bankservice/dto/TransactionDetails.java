@@ -2,10 +2,18 @@ package com.cg.bankservice.dto;
 
 public class TransactionDetails {
 
-	long fromAccountNo,toAccountNo,amountTransfered;
+	long transactionId,fromAccountNo,toAccountNo,amountTransfered;
 
 	public long getFromAccountNo() {
 		return fromAccountNo;
+	}
+
+	public long getTransactionId() {
+		return transactionId;
+	}
+
+	public void setTransactionId(long transactionId) {
+		this.transactionId = transactionId;
 	}
 
 	public void setFromAccountNo(long fromAccountNo) {
