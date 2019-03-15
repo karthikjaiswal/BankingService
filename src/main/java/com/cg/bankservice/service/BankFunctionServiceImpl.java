@@ -18,34 +18,23 @@ public class BankFunctionServiceImpl implements BankFunctionService{
 			
 		return bankFunctionDao.loginUser(accountNo, password);
 	}
-	public boolean validateEmail(String email)
-	{
-		boolean check=true;
-		
-		
-		return check;
-		
-	}
-
-	public boolean validatePassword(String pass) {
-		boolean check=true;
-		
-		
-		return check;
-	}
-
+	
 	public boolean validateAadhar(long aadhar) {
-		boolean check=true;
-		
-		
-		return check;
+		String mob=String.valueOf(aadhar);
+		if(mob.length()==12)
+			return true;
+		else
+			return false;
 	}
 
 	public boolean validateMobileNo(long mobile) {
-		boolean check=true;
 		
-		
-		return check;
+		String mob=String.valueOf(mobile);
+		if(mob.length()==10)
+			return true;
+		else
+			return false;
+	
 	}
 
 }

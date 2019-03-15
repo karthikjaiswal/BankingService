@@ -47,13 +47,24 @@ public class Bank
 		        		customerDetails.setPancardNo(scanner.next());
 		        		
 		        		System.out.println("enter aadhar no");
-		        		customerDetails.setAadharNo(scanner.nextLong());
-		        		
-		        		System.out.println("enter mobile no");
-		        		customerDetails.setMobileNo(scanner.nextLong());
-		        		
-		        		System.out.println("enter address");
-		        		customerDetails.setAddress(scanner.next());
+		        		long aadhar=scanner.nextLong();
+		        		if(bankFunctionService.validateAadhar(aadhar))
+		        		{
+		        			customerDetails.setAadharNo(aadhar);
+		        			System.out.println("enter mobile no");
+			        		long mobile=scanner.nextLong();
+			        		if(bankFunctionService.validateMobileNo(mobile))
+			        		{
+			        			customerDetails.setMobileNo(mobile);
+			        			System.out.println("enter address");
+				        		customerDetails.setAddress(scanner.next());
+			        		}
+		        			
+		        		}
+		        		else
+		        		{
+		        			System.err.println("Invalid Aadhar or Mobile Number");
+		        		}
 		        		
 		        		customerDetails.setBalance(0);
 		        		
