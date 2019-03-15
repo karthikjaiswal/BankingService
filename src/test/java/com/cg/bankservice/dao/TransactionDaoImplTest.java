@@ -19,12 +19,11 @@ class TransactionDaoImplTest {
 	@Test
 	void testFundTransfer()
 	{
-		transacDetails.setTransactionId(105);
-		transacDetails.setFromAccountNo(1002l);
-		transacDetails.setToAccountNo(1009l);
-		transacDetails.setAmountTransfered(100l);
 		
-		assertEquals(transacDetails,transactionDao.fundTransfer(1002l,1009l,100l));
+		transacDetails.setFromAccountNo(1009l);
+		
+		
+		assertEquals(transacDetails.getFromAccountNo(),(transactionDao.fundTransfer(1009l,1002l,10l)).getFromAccountNo());
 	}
 	
 	@Test
@@ -37,7 +36,7 @@ class TransactionDaoImplTest {
 	void testWithdrawAmount()
 	{
 		
-		assertEquals(1000,transactionDao.withdrawAmount(1001l,100l));
+		assertEquals(1000,transactionDao.withdrawAmount(1001l,0l));
 	}
 	@Test
 	void testShowBalance()
